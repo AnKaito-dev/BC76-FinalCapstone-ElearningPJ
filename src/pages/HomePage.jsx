@@ -1,7 +1,12 @@
 import React from "react";
+import BodyTemplace from "../templates/HomeTemplate/components/BodyTemplace";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <BodyTemplace />
+    </>
+  );
 };
 
 export default HomePage;

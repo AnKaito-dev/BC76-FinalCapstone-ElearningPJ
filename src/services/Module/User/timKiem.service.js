@@ -8,4 +8,12 @@ export const timKiemKhoaHoc = {
   layDanhMucKhoaHoc: () => {
     return http.get(`/QuanLyKhoaHoc/LayDanhMucKhoaHoc`);
   },
+  layDanhSachKhoaHoc: () => {
+    return http.get(`/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01`);
+  },
+  layDanhSachKhoaHocTheoDanhMuc: (data) => {
+    return http.get(
+      `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${data}&MaNhom=GP01`
+    );
+  },
 };

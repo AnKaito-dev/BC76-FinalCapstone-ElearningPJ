@@ -1,7 +1,8 @@
 export const pathDefault = {
   homePage: "/",
+  course: "/course/:id",
   signIn: "/sign-in",
-  signUp: "/sign-up",
+  logIn: "/log-in",
   admin: "/admin",
   managerUser: "/admin/manager-user",
   managerJob: "/admin/manager-job",
