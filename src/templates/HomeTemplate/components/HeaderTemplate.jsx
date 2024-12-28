@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useViewport from "./../../../hooks/UseViewport";
 import { pathDefault } from "../../../common/path";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Icon from "../../../components/Icon";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import InputSearch from "../../../components/Input/InputSearch";
@@ -20,7 +20,7 @@ const HeaderTemplate = () => {
   const [value] = useDebounce(keyword, 2000);
   // state quản lý dữ liệu thanh search
   const [litSearch, setListSearch] = useState([]);
-
+  const navigate = useNavigate();
   // handle change keyword
   const handleChangeKeyword = (event) => {
     setKeyword(event.target.value);
@@ -54,9 +54,19 @@ const HeaderTemplate = () => {
               <InputSearch placeholder={"Tìm khóa học"} />
             </div>
             <div className="lg:col-span-1 col-span-2 grid grid-cols-2">
-              <ButtonGhost content={"Đăng nhập"} />
+              <ButtonGhost
+                content={"Đăng nhập"}
+                onClick={() => {
+                  navigate(pathDefault.signIn);
+                }}
+              />
 
-              <ButtonHover content={"Đăng kí"} />
+              <ButtonHover
+                content={"Đăng kí"}
+                onClick={() => {
+                  navigate(pathDefault.logIn);
+                }}
+              />
             </div>
           </div>
         </div>

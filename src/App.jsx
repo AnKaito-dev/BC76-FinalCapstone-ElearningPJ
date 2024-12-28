@@ -4,6 +4,10 @@ import "./index.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React, { Suspense, CreateContext, createContext } from "react";
+import SignIn from "./pages/SignIn/SignIn";
+import Login from "./pages/LogIn/Login";
+import HomePage from "./pages/HomePage";
+import DanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/DanhSachKhoaHoc";
 export const NotificationContext = createContext();
 
 const Homtemplate = React.lazy(() =>
@@ -21,7 +25,28 @@ const arrRoutes = [
         <Homtemplate />
       </Suspense>
     ),
+    children: [
+      {
+        path: pathDefault.homePage,
+        element: <HomePage />,
+      },
+      {
+        path: pathDefault.course,
+        element: <DanhSachKhoaHoc />,
+      },
+    ],
   },
+  {
+    index: true,
+    path: pathDefault.signIn,
+    element: <SignIn />,
+  },
+  {
+    index: true,
+    path: pathDefault.logIn,
+    element: <Login />,
+  },
+
   {
     path: pathDefault.admin,
     element: (
@@ -50,6 +75,7 @@ function App() {
     <>
       <NotificationContext.Provider value={handleNotification}>
         {routes}
+        <ToastContainer />
       </NotificationContext.Provider>
     </>
   );
