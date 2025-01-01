@@ -7,30 +7,31 @@ const FooterTemplate = () => {
     <div className="container">
       <div className=" container grid bg-gray-800 mt-5 pt-10 pb-10 ">
         <div className=" grid grid-cols-1 lg:grid-cols-3 space-y-2 justify-center mb-10">
-          <div className="ml-3 space-y-4  justify-center">
-            <h4 className=" mt-4 text-2xl font-semibold text-center  text-yellow-500">
-              Đăng ký nhận ưu đãi
-            </h4>
-            <p className="text-white">
-              CyberSoft sẽ gởi các khóa học trực tuyến & các chương trình
-              CyberLive hoàn toàn MIỄN PHÍ và các chương trình KHUYẾN MÃI hấp
-              dẫn đến các bạn.
-            </p>
-            <div className="grid  w-full  lg:w-2/3 justify-between lg:justify-normal space-y-3">
-              <InputCustom
-                labelContent={"Đăng ký ngay"}
-                className="w-full"
-                placeholder={"Vui lòng nhập email"}
-              />
-              <InputCustom
-                type={"number"}
-                placeholder={"Vui lòng nhập Số điện thoại"}
-              />
-              <div className="grid grid-cols-1 ">
-                <ButtonDangKy content={"Đăng ký"} />
+          <form action="" className="text-center">
+            <div className="ml-3 space-y-4 flex flex-col items-center">
+              <h4 className=" mt-4 text-2xl font-semibold text-center  text-yellow-500">
+                Đăng ký nhận ưu đãi
+              </h4>
+              <p className="text-white">
+                CyberSoft sẽ gởi các khóa học trực tuyến & các chương trình
+                CyberLive hoàn toàn MIỄN PHÍ và các chương trình KHUYẾN MÃI hấp
+                dẫn đến các bạn.
+              </p>
+              <div className="w-2/3 text-center  space-y-2">
+                <InputCustom
+                  labelContent={"Đăng ký ngay"}
+                  placeholder={"Vui lòng nhập email"}
+                />
+                <InputCustom
+                  type={"number"}
+                  placeholder={"Vui lòng nhập Số điện thoại"}
+                />
+                <div className="grid grid-cols-1 ">
+                  <ButtonDangKy content={"Đăng ký"} />
+                </div>
               </div>
             </div>
-          </div>
+          </form>
 
           <div className="flex lg:col-span-2  justify-center items-center flex-col">
             <h4 className=" mt-4 text-2xl font-semibold text-center  text-yellow-500">
@@ -44,7 +45,12 @@ const FooterTemplate = () => {
               className="rounded-md mt-4 w-2/3"
             ></video>
             <div className="mt-4 ">
-              <ButtonDangKy content={"Tư vấn khóa học"} />
+              <a
+                target="_blank"
+                href="https://www.facebook.com/messages/t/231169113737422"
+              >
+                <ButtonDangKy content={"Tư vấn khóa học"} />
+              </a>
             </div>
           </div>
         </div>

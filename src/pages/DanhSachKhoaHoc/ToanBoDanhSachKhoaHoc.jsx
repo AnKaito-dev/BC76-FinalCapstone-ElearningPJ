@@ -1,79 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { timKiemKhoaHoc } from "../../services/Module/User/timKiem.service";
 import { ButtonDangKy } from "../../components/Button/ButtonCustom";
-import { useParams } from "react-router-dom";
 import { Pagination } from "antd";
-import { current } from "@reduxjs/toolkit";
 
-const DanhSachKhoaHoc = ({ categoryId }) => {
+const ToanBoDanhSachKhoaHoc = () => {
   const [course, setCouser] = useState([]);
-  const { id } = useParams();
-
+  const [pageSize] = useState(12);
   const [curentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(8);
-
   useEffect(() => {
     timKiemKhoaHoc
-      .layDanhSachKhoaHocTheoDanhMuc(id)
+      .layDanhSachKhoaHoc()
       .then((res) => {
         setCouser(res.data);
         console.log(res.data);
       })
-      .catch(
-        (err) => {
-          console.log(err);
-        },
-        [categoryId]
-      );
-  }, [id]);
-  // lấy khóa học cho trang hiện tại
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const currentCourse = course.slice(
     (curentPage - 1) * pageSize,
     curentPage * pageSize
   );
-
-  //hàm xử lý khi đổi trang
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
   return (
     <div className="container">
       <div>
-        <h3 className="font-medium text-2xl mt-3 text-center lg:text-start">
-          {id === "BackEnd"
-            ? "Khóa học BackEnd"
-            : id === "Design"
-            ? "Danh sách khóa học Design"
-            : id === "DiDong"
-            ? "Danh sách khóa học Di Động"
-            : id === "FrontEnd"
-            ? "Danh sách khóa học FrontEnd"
-            : id === "FullStack"
-            ? "Danh sách khóa học FullStack"
-            : "Danh sách khóa học Tư duy"}
+        <h3 className="font-semibold text-2xl mt-4">
+          Các khóa học của Crybersoft
         </h3>
       </div>
-
-      <div className="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-5 mb-5 ">
         {currentCourse.map((course, index) => (
-          <div key={index} className="border p-4 space-y-3">
+          <div className="space-y-4" key={index}>
             <img
-              className="w-full h-auto lg:h-[250px]"
-              src={course.hinhAnh}
+              src={
+                course.hinhAnh
+                  ? course.hinhAnh
+                  : "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg"
+              }
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src =
                   "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg";
               }}
+              className="w-full h-auto lg:h-[250px]"
               alt=""
             />
             <h3 className="font-medium text-center text-white bg-gray-800 rounded-sm">
               {course.tenKhoaHoc}
             </h3>
             <div className="flex justify-around items-center">
-              <p> Lượt xem {course.luotXem}</p>
-              <ButtonDangKy content={"Đăng ký"} />
+              <p> lượt xem {course.luotXem}</p>
+              <ButtonDangKy content={"Đăng Ký"} />
             </div>
           </div>
         ))}
@@ -83,9 +64,10 @@ const DanhSachKhoaHoc = ({ categoryId }) => {
         pageSize={pageSize}
         total={course.length}
         onChange={handlePageChange}
-      ></Pagination>
+        showSizeChanger={false}
+      />
     </div>
   );
 };
 
-export default DanhSachKhoaHoc;
+export default ToanBoDanhSachKhoaHoc;

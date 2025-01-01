@@ -21,30 +21,43 @@ const SignIn = () => {
   const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues: {
-        email: "",
-        password: "",
+        taiKhoan: "",
+        matKhau: "",
       },
       onSubmit: (data) => {
         authService
           .signIn(data)
           .then((res) => {
             console.log(res);
+            // tạo biến lưu user Data
+            const userData = {
+              taiKhoan: res.data.taiKhoan,
+              email: res.data.email,
+              hoTen: res.data.hoTen,
+              maLoaiNguoiDung: res.data.maLoaiNguoiDung,
+              maNhom: res.data.maNhom,
+              soDT: res.data.soDT,
+            };
+            console.log("User data to update Redux:", userData);
+            handleNotification("success", "Đăng nhập thành công", 3000);
+            // Lưu thông tin vào localStorage
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+
+            // dispath để lưu vào state
+            dispatch(handleUpdateUser(userData));
+            setTimeout(() => {
+              navigate(pathDefault.homePage);
+            }, 1500);
           })
           .catch((err) => {
-            console.log(err);
-            handleNotification(
-              "error",
-              "Tài khoản hoặc mật khẩu không đúng",
-              3000
-            );
+            console.error("Chi tiết lỗi:", err);
+            handleNotification("error", err.response.data, 3000);
           });
       },
       // validationSchema
       validationSchema: Yup.object({
-        email: Yup.string()
-          .email("Vui lòng nhập đúng định dạng email")
-          .required("Vui lòng không bỏ trống"),
-        password: Yup.string().required("Vui lòng không bỏ trống"),
+        taiKhoan: Yup.string().required("Vui lòng không bỏ trống"),
+        matKhau: Yup.string().required("Vui lòng không bỏ trống"),
       }),
     });
 
@@ -77,35 +90,35 @@ const SignIn = () => {
         <div className=" grid mt-10 lg:mt-0 justify-center">
           <h1 className="text-3xl font-bold">Trang đăng nhập</h1>
           <p className="font-semibold text-sm text-gray-500">
-            Nhập Email để bắt đầu truy cập
+            Nhập Tài khoản để bắt đầu truy cập
           </p>
           <form className="space-y-3 mt-10" onSubmit={handleSubmit}>
             <div className="w-2/3 space-y-3">
               <div>
-                <label htmlFor="">Email</label>
+                <label htmlFor="">Tài Khoản</label>
                 <Input
-                  name="email"
-                  value={values.email}
+                  name="taiKhoan"
+                  value={values.taiKhoan}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Vui lòng nhập email"
                 />
-                {errors.email && touched.email && (
-                  <p className="text-red-500 text-sm mt-1"> {errors.email}</p>
+                {errors.taiKhoan && touched.taiKhoan && (
+                  <p className="text-red-500 text-sm mt-1">{errors.taiKhoan}</p>
                 )}
               </div>
               <div>
-                <label htmlFor="">Password</label>
+                <label htmlFor="">Mật Khẩu</label>
                 <Input
                   type="password"
-                  name="password"
-                  value={values.password}
+                  name="matKhau"
+                  value={values.matKhau}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Vui lòng nhập mật khẩu"
                 />
-                {errors.password && touched.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                {errors.matKhau && touched.matKhau && (
+                  <p className="text-red-500 text-sm mt-1">{errors.matKhau}</p>
                 )}
               </div>
               <ButtonDangKy type="submit" content={"Đăng nhập"} />

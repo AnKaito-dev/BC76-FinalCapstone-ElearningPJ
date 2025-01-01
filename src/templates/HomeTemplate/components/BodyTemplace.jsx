@@ -3,6 +3,8 @@ import AnimationData from "../../../assets/animation/AnimationHomeTemplace.json"
 import Lottie from "react-lottie";
 import { ButtonDangKy } from "../../../components/Button/ButtonCustom";
 import { timKiemKhoaHoc } from "../../../services/Module/User/timKiem.service";
+import { Link } from "react-router-dom";
+import ToanBoDanhSachKhoaHoc from "../../../pages/DanhSachKhoaHoc/ToanBoDanhSachKhoaHoc";
 
 const BodyTemplace = () => {
   const defaultOption = {
@@ -37,8 +39,15 @@ const BodyTemplace = () => {
               Trở thành lập trình viên chuyên nghiệp tại Cybersoft
             </h4>
             <div className="space-x-3">
-              <ButtonDangKy content={"Xem Khóa Học"} />
-              <ButtonDangKy content={"Tư vấn trực tiếp"} />
+              <Link to={"/all-course"}>
+                <ButtonDangKy content={"Xem Khóa Học"} />
+              </Link>
+              <a
+                target="_blank"
+                href="https://www.facebook.com/messages/t/231169113737422"
+              >
+                <ButtonDangKy content={"Tư vấn trực tiếp"} />
+              </a>
             </div>
           </div>
         </div>
@@ -52,13 +61,28 @@ const BodyTemplace = () => {
             {data.map((data, index) => (
               <div key={index} className="border p-4 space-y-3">
                 <img
-                  src={data.hinhAnh}
+                  src={
+                    data.hinhAnh
+                      ? data.hinhAnh
+                      : "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg"
+                  }
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                      "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg";
+                  }}
                   alt={data.tenKhoaHoc}
-                  className="w-full h-32 object-cover"
+                  className="w-full h-auto lg:h-[250px]"
                 />
-                <h3 className="text-xl font-bold mt-2">{data.tenKhoaHoc}</h3>
 
-                <ButtonDangKy content={"Đăng ký"} />
+                <h3 className="bg-gray-800 text-white text-xl  mt-2 text-center font-medium rounded-sm">
+                  {data.tenKhoaHoc}
+                </h3>
+                <div className="flex justify-around items-center">
+                  <p>Lượt xem {data.luotXem}</p>
+
+                  <ButtonDangKy content={"Đăng ký"} />
+                </div>
               </div>
             ))}
           </div>

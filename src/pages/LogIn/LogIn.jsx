@@ -4,12 +4,12 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { NotificationContext } from "../../App";
-import { useFormik, validateYupSchema } from "formik";
+import { useFormik } from "formik";
 import { authService } from "../../services/Module/User/auth.service";
 import Icon from "../../components/Icon";
 import { LeftOutlined } from "@ant-design/icons";
 import Lottie from "react-lottie";
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import { ButtonDangKy } from "../../components/Button/ButtonCustom";
 import { pathDefault } from "../../common/path";
 
@@ -24,17 +24,20 @@ const Login = () => {
         matKhau: "",
         hoTen: "",
         soDT: "",
-        maNhom: "",
+        maNhom: "GP01",
         email: "",
       },
-      onSubmit: (values) => {
+      onSubmit: (data) => {
         authService
-          .logIn(values)
+          .logIn(data)
           .then((res) => {
             console.log(res);
+            handleNotification("success", "Đăng ký thành công", 3000);
+            navigate(pathDefault.signIn);
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err.response.data);
+            handleNotification("error", err.response.data, 3000);
           });
       },
       //validation
@@ -45,7 +48,7 @@ const Login = () => {
         email: Yup.string()
           .email("Vui lòng nhập đúng định dạng email")
           .required("Vui lòng không để trống"),
-        password: Yup.string().required("Vui lòng không bỏ trống"),
+        soDT: Yup.string().required("Vui lòng không để trống"),
       }),
     });
 
@@ -60,6 +63,7 @@ const Login = () => {
     }),
     []
   );
+
   return (
     <div className="container grid grid-cols-1 lg:grid-cols-3">
       <div className="SignIn_animation col-span-2 mt-10">
@@ -86,6 +90,22 @@ const Login = () => {
           <form className="space-y-3 mt-10" onSubmit={handleSubmit}>
             <div className="w-2/3 space-y-3">
               <div>
+                <label htmlFor="">Tài khoản</label>
+                <Input
+                  placeholder="Vui lòng nhập họ tên"
+                  name="taiKhoan"
+                  value={values.taiKhoan}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                {errors.taiKhoan && touched.taiKhoan && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {" "}
+                    {errors.taiKhoan}
+                  </p>
+                )}
+              </div>
+              <div>
                 <label htmlFor="">Họ tên</label>
                 <Input
                   placeholder="Vui lòng nhập họ tên"
@@ -101,13 +121,14 @@ const Login = () => {
               <div>
                 <label htmlFor="">Số điện thoại</label>
                 <Input
+                  type="number"
                   name="soDT"
                   value={values.soDT}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Vui lòng nhập số điện thoại"
                 />
-                {errors.email && touched.email && (
+                {errors.soDT && touched.soDT && (
                   <p className="text-red-500 text-sm mt-1"> {errors.soDT}</p>
                 )}
               </div>
@@ -130,19 +151,20 @@ const Login = () => {
                 <label htmlFor="">Password</label>
                 <Input
                   type="password"
-                  name="password"
-                  value={values.password}
+                  name="matKhau"
+                  value={values.matKhau}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="Vui lòng nhập mật khẩu"
                 />
-                {errors.password && touched.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                {errors.matKhau && touched.matKhau && (
+                  <p className="text-red-500 text-sm mt-1">{errors.matKhau}</p>
                 )}
               </div>
             </div>
             <div className="flex gap-4">
-              <ButtonDangKy content={"Đăng Ký"} />
+              <ButtonDangKy type="submit" content={"Đăng ký"} />
+              {/* <Button htmlType="submit">đăng ký</Button> */}
               <Link to={pathDefault.signIn}>
                 <ButtonDangKy content={"Đăng nhập"} />
               </Link>

@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import Login from "./pages/LogIn/Login";
 import HomePage from "./pages/HomePage";
 import DanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/DanhSachKhoaHoc";
+import ToanBoDanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/ToanBoDanhSachKhoaHoc";
 export const NotificationContext = createContext();
 
 const Homtemplate = React.lazy(() =>
@@ -33,6 +34,10 @@ const arrRoutes = [
       {
         path: pathDefault.course,
         element: <DanhSachKhoaHoc />,
+      },
+      {
+        path: pathDefault.allCourse,
+        element: <ToanBoDanhSachKhoaHoc />,
       },
     ],
   },
