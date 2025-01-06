@@ -86,6 +86,9 @@ const BodyTemplace = () => {
               </div>
             ))}
           </div>
+          <div className="font-medium text-right mr-5 mt-3">
+            <Link to={"/all-course"}>Xem thêm </Link>
+          </div>
         </div>
       </div>
     </div>
