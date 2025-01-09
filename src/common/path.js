@@ -5,6 +5,7 @@ export const pathDefault = {
   allCourseDetail: "/all-course/:id",
   signIn: "/sign-in",
   logIn: "/log-in",
+  update: "/update/:id",
   admin: "/admin",
   managerUser: "/admin/manager-user",
   managerJob: "/admin/manager-job",

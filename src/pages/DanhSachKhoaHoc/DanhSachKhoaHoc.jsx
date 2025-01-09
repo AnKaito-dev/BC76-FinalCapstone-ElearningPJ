@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { timKiemKhoaHoc } from "../../services/Module/User/timKiem.service";
 import { ButtonDangKy } from "../../components/Button/ButtonCustom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Pagination } from "antd";
-import { current } from "@reduxjs/toolkit";
 
 const DanhSachKhoaHoc = ({ categoryId }) => {
   const [course, setCouser] = useState([]);
@@ -36,6 +35,11 @@ const DanhSachKhoaHoc = ({ categoryId }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  // navigate chuyển hướng
+  const navigate = useNavigate();
+  const hanldeClick = (courseId) => {
+    navigate(`/all-course/${courseId}`);
+  };
 
   return (
     <div className="container">
@@ -56,11 +60,17 @@ const DanhSachKhoaHoc = ({ categoryId }) => {
       </div>
 
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-4">
-        {currentCourse.map((course, index) => (
-          <div key={index} className="border p-4 space-y-3">
+        {currentCourse.map((item, index) => (
+          <div
+            onClick={() => {
+              hanldeClick(item.maKhoaHoc);
+            }}
+            key={index}
+            className="border p-4 space-y-3 cursor-pointer"
+          >
             <img
               className="w-full h-auto lg:h-[250px]"
-              src={course.hinhAnh}
+              src={item.hinhAnh}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src =
@@ -69,7 +79,7 @@ const DanhSachKhoaHoc = ({ categoryId }) => {
               alt=""
             />
             <h3 className="font-medium text-center text-white bg-gray-800 rounded-sm">
-              {course.tenKhoaHoc}
+              {item.tenKhoaHoc}
             </h3>
             <div className="flex justify-around items-center">
               <p> Lượt xem {course.luotXem}</p>

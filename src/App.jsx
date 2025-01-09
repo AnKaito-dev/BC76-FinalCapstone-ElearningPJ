@@ -9,6 +9,8 @@ import Login from "./pages/LogIn/Login";
 import HomePage from "./pages/HomePage";
 import DanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/DanhSachKhoaHoc";
 import ToanBoDanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/ToanBoDanhSachKhoaHoc";
+import ChiTietKhoaHoc from "./pages/ChiTietKhoaHoc/ChiTietKhoaHoc";
+import CapNhatKhoaHoc from "./pages/CapNhatKhoaHoc/CapNhatKhoaHoc";
 export const NotificationContext = createContext();
 
 const Homtemplate = React.lazy(() =>
@@ -38,6 +40,14 @@ const arrRoutes = [
       {
         path: pathDefault.allCourse,
         element: <ToanBoDanhSachKhoaHoc />,
+      },
+      {
+        path: pathDefault.allCourseDetail,
+        element: <ChiTietKhoaHoc />,
+      },
+      {
+        path: pathDefault.update,
+        element: <CapNhatKhoaHoc />,
       },
     ],
   },

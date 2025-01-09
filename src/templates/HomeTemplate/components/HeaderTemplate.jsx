@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import useViewport from "./../../../hooks/UseViewport";
 import { pathDefault } from "../../../common/path";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ const HeaderTemplate = () => {
   console.log(width);
   const [keyword, setKeyword] = useState("");
   // debounce
-  const [debouncekeyWord] = useDebounce(keyword, 2000);
+  const [debouncekeyWord] = useDebounce(keyword, 500);
   // state quản lý dữ liệu thanh search
   const [litSearch, setListSearch] = useState([]);
   // gọi APi theo Debounce
@@ -38,6 +38,7 @@ const HeaderTemplate = () => {
         })
         .catch((err) => {
           console.log(err);
+          setListSearch([]);
         });
     } else {
       setListSearch([]);
@@ -48,7 +49,7 @@ const HeaderTemplate = () => {
   // handle change keyword
   const handleChangeKeyword = (event) => {
     setKeyword(event.target.value);
-    console.log(event.target.value);
+    setShowDropdown(true);
   };
   // user
   const handleNotification = useContext(NotificationContext);
@@ -64,7 +65,7 @@ const HeaderTemplate = () => {
     {
       label: (
         <Button>
-          <Link>Cập nhật</Link>
+          <Link>Cập nhật và tra cứu khóa học</Link>
         </Button>
       ),
       key: "0",
@@ -79,7 +80,11 @@ const HeaderTemplate = () => {
   ];
 
   // handle click inputSearch
-  const handleClick = () => {};
+  const [showDropdown, setShowDropdown] = useState(false);
+  const handleClick = (searchId) => {
+    navigate(`/all-course/${searchId}`);
+    setShowDropdown(false);
+  };
 
   return (
     <header className="py-4 px-4 border-b-gray-200 bg-gray-800  ">
@@ -106,8 +111,28 @@ const HeaderTemplate = () => {
                 handleChange={handleChangeKeyword}
                 value={keyword}
                 placeholder={"Tìm khóa học"}
+                handleFocus={() => {
+                  setShowDropdown(true);
+                }}
+                handleBlur={() => {
+                  setTimeout(() => setShowDropdown(false));
+                }}
+                onTouchStart={() => {
+                  setShowDropdown(true);
+                }}
+                onTouchEnd={(event) => {
+                  const isTouchInside =
+                    event.target.closest(".dropdown-search");
+                  if (!isTouchInside) {
+                    setShowDropdown(false);
+                  }
+                }}
               />
-              <DropdownSearch results={litSearch} />
+              <DropdownSearch
+                results={litSearch}
+                handleClick={handleClick}
+                showResults={showDropdown}
+              />
               <div />
             </div>
             <div className="lg:col-span-1 col-span-2 grid grid-cols-2">

@@ -3,8 +3,9 @@ import AnimationData from "../../../assets/animation/AnimationHomeTemplace.json"
 import Lottie from "react-lottie";
 import { ButtonDangKy } from "../../../components/Button/ButtonCustom";
 import { timKiemKhoaHoc } from "../../../services/Module/User/timKiem.service";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ToanBoDanhSachKhoaHoc from "../../../pages/DanhSachKhoaHoc/ToanBoDanhSachKhoaHoc";
+import Item from "antd/es/list/Item";
 
 const BodyTemplace = () => {
   const defaultOption = {
@@ -20,12 +21,17 @@ const BodyTemplace = () => {
     timKiemKhoaHoc
       .layDanhSachKhoaHoc()
       .then((res) => {
-        setData(res.data.slice(18, 26));
+        setData(res.data.slice(8, 16));
+        console.log(data.maKhoaHoc);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`/all-course/${id}`);
+  };
   return (
     <div className="container mb-20">
       <div className="lg:h-screen grid grid-cols-1 lg:grid-cols-2 justify-between items-center  ">
@@ -57,13 +63,19 @@ const BodyTemplace = () => {
           Danh sách khóa học
         </h3>
         <div className=" mt-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 ">
-            {data.map((data, index) => (
-              <div key={index} className="border p-4 space-y-3">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 cursor-pointer ">
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className="border p-4 space-y-3"
+                onClick={() => {
+                  handleClick(item.maKhoaHoc);
+                }}
+              >
                 <img
                   src={
-                    data.hinhAnh
-                      ? data.hinhAnh
+                    item.hinhAnh
+                      ? item.hinhAnh
                       : "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg"
                   }
                   onError={(e) => {
@@ -71,15 +83,15 @@ const BodyTemplace = () => {
                     e.target.src =
                       "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg";
                   }}
-                  alt={data.tenKhoaHoc}
+                  alt={item.tenKhoaHoc}
                   className="w-full h-auto lg:h-[250px]"
                 />
 
                 <h3 className="bg-gray-800 text-white text-xl  mt-2 text-center font-medium rounded-sm">
-                  {data.tenKhoaHoc}
+                  {item.tenKhoaHoc}
                 </h3>
                 <div className="flex justify-around items-center">
-                  <p>Lượt xem {data.luotXem}</p>
+                  <p>Lượt xem {item.luotXem}</p>
 
                   <ButtonDangKy content={"Đăng ký"} />
                 </div>
