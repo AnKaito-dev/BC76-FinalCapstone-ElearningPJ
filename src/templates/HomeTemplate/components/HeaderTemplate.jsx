@@ -116,6 +116,7 @@ const HeaderTemplate = () => {
                 }}
                 handleBlur={() => {
                   setTimeout(() => setShowDropdown(false));
+                  setTimeout();
                 }}
                 onTouchStart={() => {
                   setShowDropdown(true);

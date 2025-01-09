@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { timKiemKhoaHoc } from "../../services/Module/User/timKiem.service";
 import { ButtonDangKy } from "../../components/Button/ButtonCustom";
 import { Pagination } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ToanBoDanhSachKhoaHoc = () => {
   const [course, setCouser] = useState([]);
   const [pageSize] = useState(12);
   const [curentPage, setCurrentPage] = useState(1);
+  const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     timKiemKhoaHoc
       .layDanhSachKhoaHoc()
@@ -25,6 +28,9 @@ const ToanBoDanhSachKhoaHoc = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const handleClik = (courseId) => {
+    navigate(`/all-course/${courseId}`);
+  };
   return (
     <div className="container">
       <div>
@@ -33,12 +39,18 @@ const ToanBoDanhSachKhoaHoc = () => {
         </h3>
       </div>
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-5 mb-5 ">
-        {currentCourse.map((course, index) => (
-          <div className="space-y-4" key={index}>
+        {currentCourse.map((item, index) => (
+          <div
+            className="space-y-4 cursor-pointer"
+            key={index}
+            onClick={() => {
+              handleClik(item.maKhoaHoc);
+            }}
+          >
             <img
               src={
-                course.hinhAnh
-                  ? course.hinhAnh
+                item.hinhAnh
+                  ? item.hinhAnh
                   : "https://thumbs.dreamstime.com/b/error-page-not-found-lost-sorry-network-erro-concept-vector-illustration-design-193782462.jpg"
               }
               onError={(e) => {
@@ -50,10 +62,10 @@ const ToanBoDanhSachKhoaHoc = () => {
               alt=""
             />
             <h3 className="font-medium text-center text-white bg-gray-800 rounded-sm">
-              {course.tenKhoaHoc}
+              {item.tenKhoaHoc}
             </h3>
             <div className="flex justify-around items-center">
-              <p> lượt xem {course.luotXem}</p>
+              <p> lượt xem {item.luotXem}</p>
               <ButtonDangKy content={"Đăng Ký"} />
             </div>
           </div>

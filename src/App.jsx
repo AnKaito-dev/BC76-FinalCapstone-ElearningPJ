@@ -10,7 +10,9 @@ import HomePage from "./pages/HomePage";
 import DanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/DanhSachKhoaHoc";
 import ToanBoDanhSachKhoaHoc from "./pages/DanhSachKhoaHoc/ToanBoDanhSachKhoaHoc";
 import ChiTietKhoaHoc from "./pages/ChiTietKhoaHoc/ChiTietKhoaHoc";
-import CapNhatKhoaHoc from "./pages/CapNhatKhoaHoc/CapNhatKhoaHoc";
+import CapnhatThongTin from "./pages/CapNhatThongTin/CapnhatThongTin";
+import ThongTinCaNhan from "./pages/CapNhatThongTin/ThongTinCaNhan";
+import QuanLyKhoaHoc from "./pages/CapNhatThongTin/QuanLyKhoaHoc";
 export const NotificationContext = createContext();
 
 const Homtemplate = React.lazy(() =>
@@ -47,7 +49,17 @@ const arrRoutes = [
       },
       {
         path: pathDefault.update,
-        element: <CapNhatKhoaHoc />,
+        element: <CapnhatThongTin />,
+        children: [
+          {
+            path: "Info",
+            element: <ThongTinCaNhan />,
+          },
+          {
+            path: "manager-course",
+            element: <QuanLyKhoaHoc />,
+          },
+        ],
       },
     ],
   },

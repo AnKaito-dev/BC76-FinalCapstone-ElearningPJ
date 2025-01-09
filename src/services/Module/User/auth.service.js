@@ -7,4 +7,18 @@ export const authService = {
   logIn: (data) => {
     return http.post("/QuanLyNguoiDung/DangKy", data);
   },
+  Update: (token, data) => {
+    return http.post("/QuanLyNguoiDung/ThongTinTaiKhoan", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      GetInfo: (token) => {
+        return http.post("/QuanLyNguoiDung/ThongTinTaiKhoan", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      },
+    });
+  },
 };
