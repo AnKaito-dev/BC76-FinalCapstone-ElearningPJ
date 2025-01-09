@@ -10,7 +10,7 @@ export const ButtonGhost = ({ icon, content, onClick, type = "Button" }) => {
     </button>
   );
 };
-export const ButtonHover = ({ icon, content, onClick, type = "Button" }) => {
+export const ButtonHover = ({ icon, content, onClick, type = "button" }) => {
   return (
     <button
       type={type}

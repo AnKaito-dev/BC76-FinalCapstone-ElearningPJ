@@ -16,4 +16,8 @@ export const timKiemKhoaHoc = {
       `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${data}&MaNhom=GP01`
     );
   },
+  ChitietKhoaHoc: (data) => {
+    console.log("ID Khoa Hoc:", data);
+    return http.get(`/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${data}`);
+  },
 };
